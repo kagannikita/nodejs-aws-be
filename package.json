@@ -17,6 +17,8 @@
   "dependencies": {
     "@middy/core": "^2.5.3",
     "@middy/http-json-body-parser": "^2.5.3",
+    "serverless-auto-swagger": "^2.5.1",
+    "serverless-offline": "^8.8.0",
     "serverless-webpack": "^5.7.1",
     "tsconfig-paths-webpack-plugin": "^3.5.2",
     "webpack-node-externals": "^3.0.0"

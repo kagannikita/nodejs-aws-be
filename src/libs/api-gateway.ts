@@ -5,7 +5,13 @@ type ValidatedAPIGatewayProxyEvent<S> = Omit<APIGatewayProxyEvent, 'body'> & { b
 export type ValidatedEventAPIGatewayProxyEvent<S> = Handler<ValidatedAPIGatewayProxyEvent<S>, APIGatewayProxyResult>
 
 export const formatJSONResponse = (response: Record<string, unknown>) => {
+  const headers = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Credentials": true,
+    "Content-Type": "application/json;charset=UTF-8",
+  }
   return {
+    headers:headers,
     statusCode: 200,
     body: JSON.stringify(response)
   }
