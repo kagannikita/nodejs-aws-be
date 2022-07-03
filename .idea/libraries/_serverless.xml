@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name=".serverless">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/product-service/.serverless/getProductById.zip!/" />
+      <root url="jar://$PROJECT_DIR$/product-service/.serverless/createProduct.zip!/" />
+      <root url="jar://$PROJECT_DIR$/product-service/.serverless/getProducts.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

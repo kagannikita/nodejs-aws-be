@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="gradle-wrapper4">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/import-service/node_modules/serverless/lib/plugins/create/templates/aws-clojure-gradle/gradle/wrapper/gradle-wrapper.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
