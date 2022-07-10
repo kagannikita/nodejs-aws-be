@@ -9,6 +9,7 @@ import { middyfy } from '@libs/lambda';
 import 'source-map-support/register';
 import {AppError} from "@libs/app-error";
 import {BUCKET_NAME} from "../../bucket_info/bucket-name";
+import {formatJSONResponse} from "@libs/api-gateway";
 
 export const checkIsCsvFile = (filename: string): boolean => {
     const arrNames = filename.split('.');
@@ -17,7 +18,7 @@ export const checkIsCsvFile = (filename: string): boolean => {
 
 const importProductsFile = async ({
                                       pathParameters,
-                                  }): Promise<{ url: string }> => {
+                                  }) => {
     const { filename } = pathParameters;
     if (!checkIsCsvFile(filename)) {
         throw new AppError('Wrong file format', 400);
@@ -32,8 +33,8 @@ const importProductsFile = async ({
     };
     const client = new S3Client(clientParams);
     const command = new PutObjectCommand(getObjectParams);
-    const url = await getSignedUrl(client, command, { expiresIn: 60 });
-    return { url };
+    const url = await getSignedUrl(client, command, { expiresIn: 15*60 });
+    return formatJSONResponse({ url });
 };
 
 export const main = middyfy(importProductsFile);

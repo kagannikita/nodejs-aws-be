@@ -16,6 +16,8 @@
     "@middy/http-json-body-parser": "^2.5.3",
     "aws-cdk": "^1.121.0",
     "aws-sdk": "^2.1167.0",
+    "@aws-sdk/client-sns": "^3.34.0",
+    "@aws-sdk/client-sqs": "^3.34.0",
     "csv-parser": "^3.0.0",
     "joi": "^17.4.2",
     "pg-native": "^3.0.0",

@@ -1,5 +1,5 @@
 import type { AWS } from '@serverless/typescript';
-import {importFileParser, importProductsFile} from "@functions/index";
+import {catalogBatchProcess, importFileParser, importProductsFile} from "@functions/index";
 
 const serverlessConfiguration: AWS = {
   service: 'product-service',
@@ -10,16 +10,35 @@ const serverlessConfiguration: AWS = {
     runtime: 'nodejs14.x',
     region: 'us-east-1',
     stage: 'dev',
+    httpApi: {
+      cors: true
+    },
     iamRoleStatements: [
       {
         Effect: 'Allow',
-        Action: 's3:ListBucket',
+        Action: ['s3:ListBucket'],
         Resource: 'arn:aws:s3:::nodejs-aws-s3',
       },
       {
         Effect: 'Allow',
-        Action: 's3:*',
+        Action: ['s3:*'],
         Resource: 'arn:aws:s3:::nodejs-aws-s3/*',
+      },
+      {
+        Effect: 'Allow',
+        Action: 'sqs:*',
+        Resource: [
+          {
+            'Fn::GetAtt': ['SQSQueue', 'Arn'],
+          },
+        ],
+      },
+      {
+        Effect: 'Allow',
+        Action: 'sns:*',
+        Resource: {
+          Ref: 'SNSTopic',
+        },
       },
     ],
     apiGateway: {
@@ -28,11 +47,59 @@ const serverlessConfiguration: AWS = {
     },
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
+      NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
+      SQS_URL: {
+        Ref: 'SQSQueue',
+      },
+      SNS_ARN: {
+        Ref: 'SNSTopic',
+      },
     },
     lambdaHashingVersion: '20201221',
+  },resources: {
+    Resources: {
+      SQSQueue: {
+        Type: 'AWS::SQS::Queue',
+        Properties: {
+          QueueName: 'catalogItemsQueue',
+        },
+      },
+      SNSTopic: {
+        Type: 'AWS::SNS::Topic',
+        Properties: {
+          TopicName: 'createProductTopic',
+        },
+      },
+      SNSSubscription: {
+        Type: 'AWS::SNS::Subscription',
+        Properties: {
+          Endpoint: '5925520@gmail.com',
+          Protocol: 'email',
+          TopicArn: {
+            Ref: 'SNSTopic',
+          },
+          FilterPolicy: {
+            product_price: [{ numeric: ['>', 30] }],
+          },
+        },
+      },
+      SNS2Subscription: {
+        Type: 'AWS::SNS::Subscription',
+        Properties: {
+          Endpoint: 'kagan.nikita@bk.ru',
+          Protocol: 'email',
+          TopicArn: {
+            Ref: 'SNSTopic',
+          },
+          FilterPolicy: {
+            product_price: [{ numeric: ['<', 30] }],
+          },
+        },
+      },
+    },
   },
   // import the function via paths
-  functions: {importFileParser,importProductsFile},
+  functions: {importFileParser,importProductsFile,catalogBatchProcess},
   package: { individually: true },
   custom: {
     webpack: {

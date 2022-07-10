@@ -74,7 +74,7 @@ const saveToDb = async (products: Product[]) => {
     }
 };
 
-const copyAndremoveFile = async (records, client) => {
+const copyAndRemoveFile = async (records, client) => {
     for (const record of records) {
         const copyObjectParams: CopyObjectCommandInput = {
             Bucket: BUCKET_NAME,
@@ -101,7 +101,7 @@ const importProductsFile = async ({ Records }) => {
     const client = new S3Client(clientParams);
     const products = await getProducts(Records, client);
     await saveToDb(products);
-    await copyAndremoveFile(Records, client);
+    await copyAndRemoveFile(Records, client);
 };
 
 export const main = middyfy(importProductsFile);
