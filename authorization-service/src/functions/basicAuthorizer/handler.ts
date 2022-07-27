@@ -1,6 +1,6 @@
 import { middyfy } from '@libs/lambda';
 import { Handler } from 'aws-lambda';
-import 'source-map-support/register';
+
 
 const generatePolicy = (
     principalId: string,

@@ -19,6 +19,9 @@ export const checkIsCsvFile = (filename: string): boolean => {
 const importProductsFile = async ({
                                       pathParameters,
                                   }) => {
+
+    console.log('filename: ',pathParameters);
+
     const { filename } = pathParameters;
     if (!checkIsCsvFile(filename)) {
         throw new AppError('Wrong file format', 400);

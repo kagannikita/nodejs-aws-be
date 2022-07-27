@@ -2,7 +2,7 @@ import type { AWS } from '@serverless/typescript';
 import {catalogBatchProcess, importFileParser, importProductsFile} from "@functions/index";
 
 const serverlessConfiguration: AWS = {
-  service: 'product-service',
+  service: 'import-service',
   frameworkVersion: '3',
   plugins: ['serverless-esbuild','serverless-offline'],
   provider: {
@@ -73,7 +73,7 @@ const serverlessConfiguration: AWS = {
       SNSSubscription: {
         Type: 'AWS::SNS::Subscription',
         Properties: {
-          Endpoint: '5925520@gmail.com',
+          Endpoint: 'kagan.nikita@bk.ru',
           Protocol: 'email',
           TopicArn: {
             Ref: 'SNSTopic',
