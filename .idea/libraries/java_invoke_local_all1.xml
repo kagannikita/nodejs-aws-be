@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="java-invoke-local-all1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/product-service/node_modules/java-invoke-local/build/libs/java-invoke-local-all.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
